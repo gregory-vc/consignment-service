@@ -1,7 +1,8 @@
 build:
 				protoc -I. --go_out=plugins=micro:/Users/tattoor/source/consignment/consignment-service \
 					proto/consignment/consignment.proto
-				GOOS=linux GOARCH=amd64 go build
+				go get github.com/gregory-vc/vessel-service
+				go mod vendor
 				docker build -t consignment-service .
 run: 
 				docker run -p 50051:50051 \
