@@ -40,6 +40,8 @@ github.com/gregory-vc/vessel-service v0.0.0-20190201155718-0400b3b17612 h1:RgVy+
 github.com/gregory-vc/vessel-service v0.0.0-20190201155718-0400b3b17612/go.mod h1:rAgd6/g76trAAG9ysw76v4xMBYauUIXgrmgho4pzvgU=
 github.com/gregory-vc/vessel-service v0.0.0-20190201163207-ff5d3cdcadb5 h1:OCZrqfGNyKZ77SBzWLMnoUqxI4Aqk68bAnjvqBZV64w=
 github.com/gregory-vc/vessel-service v0.0.0-20190201163207-ff5d3cdcadb5/go.mod h1:rAgd6/g76trAAG9ysw76v4xMBYauUIXgrmgho4pzvgU=
+github.com/gregory-vc/vessel-service v0.0.0-20190201163506-3c7103460f7e h1:P6aGWjU9YiDq+O8KZMLRCM89V+Fvf3zP0Uv4FGyztdU=
+github.com/gregory-vc/vessel-service v0.0.0-20190201163506-3c7103460f7e/go.mod h1:rAgd6/g76trAAG9ysw76v4xMBYauUIXgrmgho4pzvgU=
 github.com/hashicorp/consul v1.4.2 h1:D9iJoJb8Ehe/Zmr+UEE3U3FjOLZ4LUxqFMl4O43BM1U=
 github.com/hashicorp/consul v1.4.2/go.mod h1:mFrjN1mfidgJfYP1xrJCF+AfRhr6Eaqhb2+sfyn/OOI=
 github.com/hashicorp/errwrap v1.0.0 h1:hLrqtEDnRye3+sgx6z4qVLNuviH3MR5aQ0ykNJa/UYA=
