@@ -3,7 +3,7 @@ build:
 				go get github.com/gregory-vc/vessel-service
 				go mod vendor
 				git add --all
-				git commit -a -m 'fix'
+				git diff-index --quiet HEAD || git commit -a -m 'fix'
 				git push origin master
 run: 
 				docker run -p 50051:50051 \
