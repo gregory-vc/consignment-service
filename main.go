@@ -38,6 +38,11 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 
 		// Note this is now uppercase (not entirely sure why this is...)
 		token := meta["Token"]
+
+		if token == "" {
+			return errors.New("token is empty")
+		}
+
 		log.Println("Authenticating with token: ", token)
 
 		// Auth here
