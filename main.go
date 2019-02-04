@@ -16,12 +16,9 @@ import (
 	vesselProto "github.com/gregory-vc/vessel-service/proto/vessel"
 
 	micro "github.com/micro/go-micro"
+	microclient "github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/metadata"
 	"github.com/micro/go-micro/server"
-)
-
-var (
-	srv micro.Service
 )
 
 // AuthWrapper is a high-order function which takes a HandlerFunc
@@ -42,7 +39,7 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 		log.Println("Authenticating with token: ", token)
 
 		// Auth here
-		authClient := userService.NewUserServiceClient("go.micro.srv.user", srv.Client())
+		authClient := userService.NewUserServiceClient("go.micro.srv.user", microclient.DefaultClient)
 		_, err := authClient.ValidateToken(context.Background(), &userService.Token{
 			Token: token,
 		})
