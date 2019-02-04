@@ -34,6 +34,8 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 			return errors.New("no auth meta-data found in request")
 		}
 
+		fmt.Println(meta)
+
 		// Note this is now uppercase (not entirely sure why this is...)
 		token := meta["Token"]
 		log.Println("Authenticating with token: ", token)
