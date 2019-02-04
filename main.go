@@ -4,16 +4,55 @@ package main
 import (
 
 	// Import the generated protobuf code
+	"errors"
 	"fmt"
 	"log"
 	"os"
 
 	pb "github.com/gregory-vc/consignment-service/proto/consignment"
+	"golang.org/x/net/context"
 
+	userService "github.com/gregory-vc/user-service/proto/user"
 	vesselProto "github.com/gregory-vc/vessel-service/proto/vessel"
 
 	micro "github.com/micro/go-micro"
+	"github.com/micro/go-micro/metadata"
+	"github.com/micro/go-micro/server"
 )
+
+var (
+	srv micro.Service
+)
+
+// AuthWrapper is a high-order function which takes a HandlerFunc
+// and returns a function, which takes a context, request and response interface.
+// The token is extracted from the context set in our consignment-cli, that
+// token is then sent over to the user service to be validated.
+// If valid, the call is passed along to the handler. If not,
+// an error is returned.
+func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
+	return func(ctx context.Context, req server.Request, resp interface{}) error {
+		meta, ok := metadata.FromContext(ctx)
+		if !ok {
+			return errors.New("no auth meta-data found in request")
+		}
+
+		// Note this is now uppercase (not entirely sure why this is...)
+		token := meta["Token"]
+		log.Println("Authenticating with token: ", token)
+
+		// Auth here
+		authClient := userService.NewUserServiceClient("go.micro.srv.user", srv.Client())
+		_, err := authClient.ValidateToken(context.Background(), &userService.Token{
+			Token: token,
+		})
+		if err != nil {
+			return err
+		}
+		err = fn(ctx, req, resp)
+		return err
+	}
+}
 
 func main() {
 
@@ -39,6 +78,8 @@ func main() {
 		// This name must match the package name given in your protobuf definition
 		micro.Name("go.micro.srv.consignment"),
 		micro.Version("latest"),
+		// Our auth middleware
+		micro.WrapHandler(AuthWrapper),
 	)
 
 	vesselClient := vesselProto.NewVesselServiceClient("go.micro.srv.vessel", srv.Client())
