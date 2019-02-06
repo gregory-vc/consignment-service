@@ -34,7 +34,7 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 			return errors.New("no auth meta-data found in request")
 		}
 
-		fmt.Println(req.Header)
+		fmt.Println(req.Header()["dsfds"])
 
 		// Note this is now uppercase (not entirely sure why this is...)
 		token := meta["Token"]
