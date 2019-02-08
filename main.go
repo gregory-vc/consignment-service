@@ -19,9 +19,7 @@ import (
 	"github.com/micro/go-micro/metadata"
 
 	"github.com/micro/go-micro/server"
-	"github.com/micro/go-micro/client"
 	_ "github.com/micro/go-plugins/registry/kubernetes"
-	"github.com/micro/go-plugins/selector/static"
 	k8s "github.com/micro/kubernetes/go/micro"
 )
 
@@ -55,7 +53,7 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 			// Our auth middleware
 			micro.WrapHandler(AuthWrapper),
 		)
-		
+
 		// Auth here
 		authClient := userService.NewUserServiceClient("user", srv.Client())
 		_, err := authClient.ValidateToken(context.Background(), &userService.Token{
@@ -96,8 +94,6 @@ func main() {
 		// Our auth middleware
 		micro.WrapHandler(AuthWrapper),
 	)
-
-	k8s.DefaultClient
 
 	vesselClient := vesselProto.NewVesselServiceClient("vessel", srv.Client())
 
