@@ -16,10 +16,19 @@ import (
 	vesselProto "github.com/gregory-vc/vessel-service/proto/vessel"
 
 	micro "github.com/micro/go-micro"
-	microclient "github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/metadata"
-	"github.com/micro/go-micro/server"
 	k8s "github.com/micro/kubernetes/go/micro"
+
+	"github.com/micro/go-micro/broker"
+	"github.com/micro/go-micro/client"
+	"github.com/micro/go-micro/server"
+
+	bkr "github.com/micro/go-plugins/broker/grpc"
+	cli "github.com/micro/go-plugins/client/grpc"
+	_ "github.com/micro/go-plugins/registry/kubernetes"
+	_ "github.com/micro/go-plugins/selector/static"
+	srv "github.com/micro/go-plugins/server/grpc"
+	"github.com/micro/micro/api"
 )
 
 // AuthWrapper is a high-order function which takes a HandlerFunc
@@ -45,7 +54,7 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 		log.Println("Authenticating with token: ", token)
 
 		// Auth here
-		authClient := userService.NewUserServiceClient("user", microclient.DefaultClient)
+		authClient := userService.NewUserServiceClient("user", client.DefaultClient)
 		_, err := authClient.ValidateToken(context.Background(), &userService.Token{
 			Token: token,
 		})
@@ -58,6 +67,18 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 }
 
 func main() {
+
+	// disable namespace
+	api.Namespace = ""
+
+	// set values for registry/selector
+	os.Setenv("MICRO_REGISTRY", "kubernetes")
+	os.Setenv("MICRO_SELECTOR", "static")
+
+	// setup broker/client/server
+	broker.DefaultBroker = bkr.NewBroker()
+	client.DefaultClient = cli.NewClient()
+	server.DefaultServer = srv.NewServer()
 
 	// Database host from the environment variables
 	host := os.Getenv("DB_HOST")

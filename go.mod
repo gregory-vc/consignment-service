@@ -6,7 +6,9 @@ require (
 	github.com/gregory-vc/user-service v0.0.0-20190204170127-40931d2ce205
 	github.com/gregory-vc/vessel-service v0.0.0-20190208110022-97a19545277c
 	github.com/micro/go-micro v0.25.0
+	github.com/micro/go-plugins v0.24.1
 	github.com/micro/kubernetes v0.7.0
+	github.com/micro/micro v0.23.2
 	golang.org/x/net v0.0.0-20190125091013-d26f9f9a57f3
 	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce
 )
