@@ -18,6 +18,7 @@ import (
 	micro "github.com/micro/go-micro"
 	microclient "github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/metadata"
+	rg "github.com/micro/go-micro/registry"
 	"github.com/micro/go-micro/server"
 	_ "github.com/micro/go-plugins/registry/kubernetes"
 	k8s "github.com/micro/kubernetes/go/micro"
@@ -36,6 +37,8 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 			return errors.New("no auth meta-data found in request")
 		}
 
+		fmt.Println(rg.ListServices())
+
 		// Note this is now uppercase (not entirely sure why this is...)
 		token := meta["token"]
 
@@ -46,7 +49,7 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 		log.Println("Authenticating with token: ", token)
 
 		// Auth here
-		authClient := userService.NewUserServiceClient("go.micro.user", microclient.DefaultClient)
+		authClient := userService.NewUserServiceClient("user", microclient.DefaultClient)
 		_, err := authClient.ValidateToken(context.Background(), &userService.Token{
 			Token: token,
 		})
