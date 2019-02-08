@@ -61,6 +61,7 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 		if err != nil {
 			return err
 		}
+		log.Println("Authenticating complete")
 		err = fn(ctx, req, resp)
 		return err
 	}
