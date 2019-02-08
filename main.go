@@ -16,11 +16,12 @@ import (
 	vesselProto "github.com/gregory-vc/vessel-service/proto/vessel"
 
 	micro "github.com/micro/go-micro"
-	microclient "github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/metadata"
-	rg "github.com/micro/go-micro/registry"
+
 	"github.com/micro/go-micro/server"
+	"github.com/micro/go-micro/client"
 	_ "github.com/micro/go-plugins/registry/kubernetes"
+	"github.com/micro/go-plugins/selector/static"
 	k8s "github.com/micro/kubernetes/go/micro"
 )
 
@@ -37,8 +38,6 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 			return errors.New("no auth meta-data found in request")
 		}
 
-		fmt.Println(rg.ListServices())
-
 		// Note this is now uppercase (not entirely sure why this is...)
 		token := meta["token"]
 
@@ -48,8 +47,11 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 
 		log.Println("Authenticating with token: ", token)
 
+		selector := static.NewSelector()
+		cl := client.NewClient(client.Selector(selector))
+
 		// Auth here
-		authClient := userService.NewUserServiceClient("user", microclient.DefaultClient)
+		authClient := userService.NewUserServiceClient("user", cl)
 		_, err := authClient.ValidateToken(context.Background(), &userService.Token{
 			Token: token,
 		})
