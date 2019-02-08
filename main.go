@@ -35,10 +35,8 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 			return errors.New("no auth meta-data found in request")
 		}
 
-		fmt.Println(req.Header()["dsfds"])
-
 		// Note this is now uppercase (not entirely sure why this is...)
-		token := meta["Token"]
+		token := meta["token"]
 
 		if token == "" {
 			return errors.New("token is empty")
@@ -47,7 +45,7 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 		log.Println("Authenticating with token: ", token)
 
 		// Auth here
-		authClient := userService.NewUserServiceClient("go.micro.srv.user", microclient.DefaultClient)
+		authClient := userService.NewUserServiceClient("user", microclient.DefaultClient)
 		_, err := authClient.ValidateToken(context.Background(), &userService.Token{
 			Token: token,
 		})
@@ -81,13 +79,13 @@ func main() {
 	srv := k8s.NewService(
 
 		// This name must match the package name given in your protobuf definition
-		micro.Name("go.micro.srv.consignment"),
+		micro.Name("consignment"),
 		micro.Version("latest"),
 		// Our auth middleware
 		micro.WrapHandler(AuthWrapper),
 	)
 
-	vesselClient := vesselProto.NewVesselServiceClient("go.micro.srv.vessel", srv.Client())
+	vesselClient := vesselProto.NewVesselServiceClient("vessel", srv.Client())
 
 	// Init will parse the command line flags.
 	srv.Init()
