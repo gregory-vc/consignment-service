@@ -45,17 +45,8 @@ func AuthWrapper(fn server.HandlerFunc) server.HandlerFunc {
 
 		log.Println("Authenticating with token: ", token)
 
-		srv := k8s.NewService(
-
-			// This name must match the package name given in your protobuf definition
-			micro.Name("consignment"),
-			micro.Version("latest"),
-			// Our auth middleware
-			micro.WrapHandler(AuthWrapper),
-		)
-
 		// Auth here
-		authClient := userService.NewUserServiceClient("user", srv.Client())
+		authClient := userService.NewUserServiceClient("user", k8s.NewService().Client())
 		_, err := authClient.ValidateToken(context.Background(), &userService.Token{
 			Token: token,
 		})
