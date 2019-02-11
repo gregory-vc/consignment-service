@@ -206,6 +206,8 @@ github.com/gregory-vc/vessel-service v0.0.0-20190208110022-97a19545277c h1:N9y9d
 github.com/gregory-vc/vessel-service v0.0.0-20190208110022-97a19545277c/go.mod h1:0uwuknv8+YawfbVL5IEzY5kkPEvxXbwwXXwyClCJCAo=
 github.com/gregory-vc/vessel-service v0.0.0-20190208121813-2d8ee22ce37c h1:PRBlvNUahAD4nbs0GbejtIcHig4TCbZofzQRTD3ztn0=
 github.com/gregory-vc/vessel-service v0.0.0-20190208121813-2d8ee22ce37c/go.mod h1:0uwuknv8+YawfbVL5IEzY5kkPEvxXbwwXXwyClCJCAo=
+github.com/gregory-vc/vessel-service v0.0.0-20190211114550-638a2583b784 h1:JP/3veHYR0Hr249mny77vgg05gq2E+nJN4TKfbLVduQ=
+github.com/gregory-vc/vessel-service v0.0.0-20190211114550-638a2583b784/go.mod h1:0uwuknv8+YawfbVL5IEzY5kkPEvxXbwwXXwyClCJCAo=
 github.com/grpc-ecosystem/go-grpc-middleware v1.0.0/go.mod h1:FiyG127CGDf3tlThmgyCl78X/SZQqEOJBCDaAfeWzPs=
 github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0/go.mod h1:8NvIoxWQoOIhqOTXgfV/d3M/q6VIi02HzZEHgUlZvzk=
 github.com/grpc-ecosystem/grpc-gateway v1.4.1/go.mod h1:RSKVYQBd5MCa4OVpNdGskqpgL2+G+NZTnrVHpWWfpdw=
