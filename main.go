@@ -19,6 +19,7 @@ import (
 	"github.com/micro/go-micro/metadata"
 
 	"github.com/micro/go-micro/server"
+	_ "github.com/micro/go-plugins/broker/nats"
 	_ "github.com/micro/go-plugins/registry/kubernetes"
 	k8s "github.com/micro/kubernetes/go/micro"
 )
