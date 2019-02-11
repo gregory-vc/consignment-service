@@ -25,8 +25,12 @@ spec:
           env:
           - name: DB_HOST
             value: "mongo:27017"
+          - name: MICRO_BROKER
+            value: "nats"
+          - name: MICRO_BROKER_ADDRESS
+            value: "nats:4222"
           - name: UPDATED_AT
-            value: "Пн фев 11 14:46:13 MSK 2019"
+            value: "Пн фев 11 17:18:00 MSK 2019"
           ports:
           - containerPort: 8080
             name: cons-port

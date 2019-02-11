@@ -25,6 +25,10 @@ spec:
           env:
           - name: DB_HOST
             value: "mongo:27017"
+          - name: MICRO_BROKER
+            value: "nats"
+          - name: MICRO_BROKER_ADDRESS
+            value: "nats:4222"
           - name: UPDATED_AT
             value: "{{ UPDATED_AT }}"
           ports:
